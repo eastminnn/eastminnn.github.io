@@ -1,0 +1,224 @@
+@import "pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css";
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* 색상: paco.me와 같은 무채색 단계 (라이트 #fff / 다크 #1a1a1a) */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --fg: #202020;
+  --dim: #646464;
+  --faint: #8d8d8d;
+  --line: #e8e8e8;
+  --surface: #f3f3f3;
+  --selection: #0000001a;
+  --spot: #00000008;
+  --card: #00000006;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #1a1a1a;
+    --fg: #ededed;
+    --dim: #a0a0a0;
+    --faint: #707070;
+    --line: #2e2e2e;
+    --surface: #232323;
+    --selection: #ffffff26;
+    --spot: #ffffff0f;
+    --card: #ffffff0a;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #1a1a1a;
+  --fg: #ededed;
+  --dim: #a0a0a0;
+  --faint: #707070;
+  --line: #2e2e2e;
+  --surface: #232323;
+  --selection: #ffffff26;
+  --spot: #ffffff0f;
+  --card: #ffffff0a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-dim: var(--dim);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, system-ui,
+    sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+/* 강조어: 본문과 같은 글꼴, 조금 굵고 밝게 */
+em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* 화면 위·아래 가장자리에서 콘텐츠가 흐려지며 사라지는 효과 */
+.edge-blur {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 72px;
+  z-index: 30;
+  pointer-events: none;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.edge-blur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(var(--dir), var(--bg), transparent);
+}
+.edge-blur-top {
+  --dir: to bottom;
+  top: 0;
+  mask-image: linear-gradient(to bottom, black 25%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black 25%, transparent);
+}
+.edge-blur-bottom {
+  --dir: to top;
+  bottom: 0;
+  mask-image: linear-gradient(to top, black 25%, transparent);
+  -webkit-mask-image: linear-gradient(to top, black 25%, transparent);
+}
+
+/* 마우스를 따라다니는 조명 (위치는 spotlight.tsx가 --x, --y로 넣어준다) */
+.spotlight {
+  background: radial-gradient(
+    600px circle at var(--x, 50%) var(--y, 50%),
+    var(--spot),
+    transparent 80%
+  );
+}
+
+/* {AI} 캐릭터: 둥실둥실 + 가끔 눈 깜빡임 */
+@keyframes bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.1);
+  }
+}
+.buddy-bob {
+  animation: bob 1.2s ease-in-out infinite;
+}
+.buddy-eye {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: blink 3s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .buddy-bob,
+  .buddy-eye {
+    animation: none;
+  }
+}
+
+/* 처음 로드될 때 요소가 차례로 떠오르는 효과. style="--i: n"으로 순서 지정 */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.rise {
+  animation: rise 0.7s cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
+
+/* 커맨드 팔레트 */
+[cmdk-overlay] {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--bg) 40%, transparent);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fade 0.15s ease;
+}
+[cmdk-dialog] {
+  position: fixed;
+  top: 18vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 51;
+  width: min(560px, calc(100vw - 32px));
+  animation: pop 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+}
+[cmdk-item][data-selected="true"] {
+  background: var(--surface);
+  color: var(--fg);
+}
+[cmdk-group-heading] {
+  padding: 8px 12px 4px;
+  font-size: 12px;
+  color: var(--faint);
+}
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) scale(0.97);
+  }
+}
