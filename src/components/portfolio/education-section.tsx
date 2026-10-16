@@ -18,12 +18,12 @@ export function EducationSection() {
     <PortfolioSection id="education" index={4}>
       {education.length > 0 && (
         <section>
-          <h3 className="mb-6 text-[13px] font-semibold text-fg">학력</h3>
+          <h3 className="mb-6 text-[17px] font-bold text-fg">학력</h3>
           <ol className={listClass}>
             {education.map((item) => (
               <li key={`${item.school}-${item.period}`} className={itemClass}>
                 <div className={hoverBackgroundClass} />
-                <p className="z-10 mt-1 text-[12px] font-medium text-faint sm:col-span-2">
+                <p className="z-10 mt-0.5 text-[13px] font-medium text-fg sm:col-span-2">
                   {item.period}
                 </p>
                 <div className="z-10 sm:col-span-6">
@@ -48,12 +48,12 @@ export function EducationSection() {
 
       {awards.length > 0 && (
         <section className={education.length > 0 ? "mt-16" : undefined}>
-          <h3 className="mb-6 text-[13px] font-semibold text-fg">수상</h3>
+          <h3 className="mb-6 text-[17px] font-bold text-fg">수상</h3>
           <ol className={compactListClass}>
             {awards.map((award) => (
               <li key={`${award.title}-${award.issuer}`} className={itemClass}>
                 <div className={hoverBackgroundClass} />
-                <p className="z-10 mt-1 text-[12px] font-medium text-faint sm:col-span-2">
+                <p className="z-10 mt-0.5 text-[13px] font-medium text-fg sm:col-span-2">
                   {award.date}
                 </p>
                 <div className="z-10 sm:col-span-6">
@@ -83,12 +83,12 @@ export function EducationSection() {
             education.length + awards.length > 0 ? "mt-16" : undefined
           }
         >
-          <h3 className="mb-6 text-[13px] font-semibold text-fg">자격증</h3>
+          <h3 className="mb-6 text-[17px] font-bold text-fg">자격증</h3>
           <ol className={compactListClass}>
             {certifications.map((certification) => (
               <li key={certification.name} className={itemClass}>
                 <div className={hoverBackgroundClass} />
-                <p className="z-10 mt-1 text-[12px] font-medium text-faint sm:col-span-2">
+                <p className="z-10 mt-0.5 text-[13px] font-medium text-fg sm:col-span-2">
                   {certification.date}
                 </p>
                 <p className="z-10 leading-snug font-semibold text-fg sm:col-span-6">

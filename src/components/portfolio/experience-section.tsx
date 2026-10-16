@@ -16,7 +16,7 @@ export function ExperienceSection() {
         {experience.map((item) => (
           <li key={`${item.period}-${item.company}`} className={itemClass}>
             <div className={hoverBackgroundClass} />
-            <p className="z-10 mt-1 text-[12px] font-medium text-faint sm:col-span-2">
+            <p className="z-10 mt-0.5 text-[13px] font-medium text-fg sm:col-span-2">
               {item.period}
             </p>
             <div className="z-10 sm:col-span-6">

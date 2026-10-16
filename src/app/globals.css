@@ -12,7 +12,7 @@
   --line: #e8e8e8;
   --surface: #f3f3f3;
   --selection: #0000001a;
-  --spot: #00000008;
+  --spot: #0000000a;
   --card: #00000006;
   --contribution-1: #9be9a8;
   --contribution-2: #40c463;
@@ -30,7 +30,7 @@
     --line: #2e2e2e;
     --surface: #232323;
     --selection: #ffffff26;
-    --spot: #ffffff0f;
+    --spot: #ffffff12;
     --card: #ffffff0a;
     --contribution-1: #0e4429;
     --contribution-2: #006d32;
@@ -48,7 +48,7 @@
   --line: #2e2e2e;
   --surface: #232323;
   --selection: #ffffff26;
-  --spot: #ffffff0f;
+  --spot: #ffffff12;
   --card: #ffffff0a;
   --contribution-1: #0e4429;
   --contribution-2: #006d32;
@@ -138,7 +138,7 @@ em {
 
 .spotlight {
   background: radial-gradient(
-    600px circle at var(--x, 50%) var(--y, 50%),
+    480px circle at var(--x, 50%) var(--y, 50%),
     var(--spot),
     transparent 80%
   );
@@ -320,5 +320,24 @@ em {
   from {
     opacity: 0;
     transform: translateX(-50%) scale(0.97);
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+.sheet-backdrop {
+  animation: fade 0.2s ease;
+}
+.sheet-panel {
+  animation: sheet-in 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sheet-backdrop,
+  .sheet-panel {
+    animation: none;
   }
 }

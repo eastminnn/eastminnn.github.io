@@ -86,7 +86,15 @@ export function CommandPalette() {
                 key={p.title}
                 value={`프로젝트 ${p.title}`}
                 keywords={p.tags}
-                onSelect={() => (p.href ? visit(p.href) : go("projects"))}
+                onSelect={() =>
+                  p.detail
+                    ? run(() => {
+                        window.location.hash = `p-${p.slug}`;
+                      })
+                    : p.href
+                      ? visit(p.href)
+                      : go("projects")
+                }
                 className={itemClass}
               >
                 <span className="truncate">{p.title}</span>
@@ -134,16 +142,16 @@ export function CommandPalette() {
             {profile.socials
               .filter((s) => !s.href.startsWith("mailto:"))
               .map((s) => (
-              <Command.Item
-                key={s.label}
-                value={`링크 ${s.label}`}
-                onSelect={() => visit(s.href)}
-                className={itemClass}
-              >
-                {s.label}
-                <span className="text-[12px] text-faint">↗</span>
-              </Command.Item>
-            ))}
+                <Command.Item
+                  key={s.label}
+                  value={`링크 ${s.label}`}
+                  onSelect={() => visit(s.href)}
+                  className={itemClass}
+                >
+                  {s.label}
+                  <span className="text-[12px] text-faint">↗</span>
+                </Command.Item>
+              ))}
             {profile.resume && (
               <Command.Item
                 value="이력서 resume"

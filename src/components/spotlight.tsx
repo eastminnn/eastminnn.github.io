@@ -9,8 +9,8 @@ export function Spotlight() {
     const el = ref.current;
     if (!el) return;
     const onMove = (e: PointerEvent) => {
-      el.style.setProperty("--x", `${e.pageX}px`);
-      el.style.setProperty("--y", `${e.pageY}px`);
+      el.style.setProperty("--x", `${e.clientX}px`);
+      el.style.setProperty("--y", `${e.clientY}px`);
       el.style.opacity = "1";
     };
     const onLeave = () => (el.style.opacity = "0");
@@ -26,7 +26,7 @@ export function Spotlight() {
     <div
       ref={ref}
       aria-hidden
-      className="spotlight pointer-events-none absolute inset-0 z-30 hidden opacity-0 transition-opacity duration-300 lg:block"
+      className="spotlight pointer-events-none fixed inset-0 z-30 hidden opacity-0 transition-opacity duration-300 lg:block"
     />
   );
 }

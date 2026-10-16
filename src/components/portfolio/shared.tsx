@@ -30,10 +30,11 @@ export function PortfolioSection({
       className="rise mb-16 scroll-mt-16 md:mb-24 lg:mb-36 lg:scroll-mt-24"
       style={{ "--i": index + 4 } as CSSProperties}
     >
-      <div className="sticky top-0 z-20 -mx-6 mb-4 bg-bg/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:sr-only">
-        <h2 className="text-xs font-bold tracking-widest text-fg uppercase">
+      <div className="sticky top-0 z-20 -mx-6 mb-4 bg-bg/75 px-6 py-5 backdrop-blur md:-mx-12 md:px-12 lg:static lg:mx-0 lg:mb-10 lg:flex lg:items-center lg:gap-4 lg:bg-transparent lg:p-0 lg:backdrop-blur-none">
+        <h2 className="shrink-0 text-xs font-bold tracking-widest text-fg uppercase">
           {label}
         </h2>
+        <span aria-hidden className="hidden h-px flex-1 bg-line lg:block" />
       </div>
       {children}
     </section>

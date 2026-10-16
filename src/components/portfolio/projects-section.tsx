@@ -32,7 +32,16 @@ export function ProjectsSection() {
             <div className="flex flex-1 flex-col p-5">
               <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
                 <h3 className="text-lg leading-snug font-semibold text-fg">
-                  {project.href ? (
+                  {project.detail ? (
+                    <a
+                      href={`#p-${project.slug}`}
+                      aria-label={`${project.title} 자세히 보기`}
+                    >
+                      <span className="absolute inset-0 z-10" />
+                      {project.title}
+                      <Arrow />
+                    </a>
+                  ) : project.href ? (
                     <a
                       href={project.href}
                       target="_blank"

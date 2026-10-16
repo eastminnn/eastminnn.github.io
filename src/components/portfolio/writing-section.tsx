@@ -16,7 +16,7 @@ export function WritingSection() {
         {writing.map((article) => (
           <li key={article.title} className={itemClass}>
             <div className={hoverBackgroundClass} />
-            <p className="z-10 mt-0.5 text-[12px] font-medium text-faint sm:col-span-2">
+            <p className="z-10 mt-0.5 text-[13px] font-medium text-fg sm:col-span-2">
               {article.year}
             </p>
             <h3 className="z-10 leading-snug font-semibold text-fg sm:col-span-6">

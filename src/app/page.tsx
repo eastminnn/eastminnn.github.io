@@ -1,11 +1,12 @@
 import { EducationSection } from "@/components/portfolio/education-section";
 import { ExperienceSection } from "@/components/portfolio/experience-section";
 import { IntroSection } from "@/components/portfolio/intro-section";
+import { ProjectSheet } from "@/components/portfolio/project-sheet";
 import { ProjectsSection } from "@/components/portfolio/projects-section";
 import { Sidebar } from "@/components/portfolio/sidebar";
 import { WritingSection } from "@/components/portfolio/writing-section";
 import { Spotlight } from "@/components/spotlight";
-import { footer, profile } from "@/content";
+import { footer, profile, projects } from "@/content";
 import { getContributions } from "@/lib/github";
 
 export default async function Home() {
@@ -42,6 +43,7 @@ export default async function Home() {
           </main>
         </div>
       </div>
+      <ProjectSheet projects={projects} />
     </div>
   );
 }
