@@ -20,7 +20,6 @@ function applyTheme(theme: Theme) {
 const itemClass =
   "flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-[15px] text-dim";
 
-// ⌘K / Ctrl+K 로 여는 검색창 (화면에 버튼은 없음). 섹션·프로젝트·글·링크로 바로 이동한다.
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);

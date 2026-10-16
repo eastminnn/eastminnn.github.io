@@ -1,6 +1,5 @@
 import { awards, certifications, education, writing } from "@/content";
 
-// ko는 ⌘K 팔레트에서 한글로도 검색되게 하는 용도
 export const sections = [
   { id: "about", label: "About", ko: "소개" },
   { id: "experience", label: "Experience", ko: "경력" },

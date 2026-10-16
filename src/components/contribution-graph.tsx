@@ -1,6 +1,5 @@
 import type { Contributions } from "@/lib/github";
 
-// 단계별 칸 색. 초록 대신 사이트 톤에 맞춘 무채색 농도.
 const levelClass = [
   "bg-surface",
   "bg-fg/20",
@@ -11,7 +10,6 @@ const levelClass = [
 
 const formatDate = (date: string) => date.replaceAll("-", ".");
 
-// 주(열) × 요일(행) 격자. 폭에 맞춰 칸 크기가 자동으로 줄어든다.
 export function ContributionGraph({
   data,
   username,
@@ -19,9 +17,8 @@ export function ContributionGraph({
 }: {
   data: Contributions;
   username: string;
-  weeks?: number; // 최근 몇 주만 보여줄지 (기본 26주 ≈ 6개월)
+  weeks?: number;
 }) {
-  // 첫 주가 일요일이 아니면 앞을 빈칸으로 채운다 (GitHub와 같은 배치)
   const offset = new Date(`${data.days[0].date}T00:00:00Z`).getUTCDay();
   const all = [...Array(offset).fill(null), ...data.days];
   const totalWeeks = Math.ceil(all.length / 7);

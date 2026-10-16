@@ -1,17 +1,15 @@
-// 사이트의 모든 내용은 이 파일에서 수정합니다.
-
 import type { IconName } from "@/components/icons";
 
 export type Link = { label: string; href: string };
 
 export type Experience = {
-  period: string; // 예: "2024.03 — 현재"
+  period: string;
   role: string;
   company: string;
-  logo?: string; // public/ 폴더 기준 경로. 예: "/logos/likelion.png"
+  logo?: string;
   href?: string;
   description: string;
-  links?: Link[]; // 설명 아래 작은 링크들 (예: 강의자료)
+  links?: Link[];
   tags: string[];
 };
 
@@ -19,32 +17,32 @@ export type Project = {
   title: string;
   description: string;
   tags: string[];
-  href?: string; // 대표 링크 (GitHub, 데모 등)
-  links?: Link[]; // 추가 링크
-  image?: string; // public/ 폴더 기준 경로. 없으면 썸네일 없이 표시
-  badge?: string; // 예: "MAU 10만"
+  href?: string;
+  links?: Link[];
+  image?: string;
+  badge?: string;
 };
 
 export type Education = {
-  period: string; // 예: "2020.03 — 2026.02"
+  period: string;
   school: string;
-  logo?: string; // public/ 폴더 기준 경로
+  logo?: string;
   major: string;
-  note?: string; // 예: "학점 4.0 / 4.5", "복수전공: 경영학"
+  note?: string;
 };
 
 export type Certification = {
-  date: string; // 예: "2025.06"
+  date: string;
   name: string;
-  issuer?: string; // 예: "한국산업인력공단"
+  issuer?: string;
 };
 
 export type Award = {
-  date: string; // 예: "2025.12"
-  title: string; // 대회 이름
-  issuer: string; // 상장을 발급한 기관
-  logo?: string; // public/ 폴더 기준 경로
-  prize: string; // 예: "대상"
+  date: string;
+  title: string;
+  issuer: string;
+  logo?: string;
+  prize: string;
   description?: string;
 };
 
@@ -57,16 +55,10 @@ export type Writing = {
 export const profile = {
   name: "Kim Dong Min",
   role: "Backend Engineer · AX",
-  // 이름 아래 한 줄 소개. *별표*로 감싼 부분은 굵고 밝게 강조되고,
-  // {중괄호}로 감싼 부분은 마우스를 올리면 캐릭터가 튀어나옵니다.
   tagline: "*실제 사람들*이 쓰는 서버를 만들고, 그 위에 {AI}를 얹습니다.",
   email: "oh1334000@gmail.com",
-  // 왼쪽 목차 아래 잔디 그래프를 가져올 GitHub 아이디. 비우면 잔디를 숨깁니다.
   github: "eastminnn",
-  // 이력서 PDF를 public/resume.pdf 에 넣고 아래 주석을 해제하세요.
-  // resume: "/resume.pdf",
   resume: undefined as string | undefined,
-  // 왼쪽 아래 아이콘 링크. icon은 "github" | "velog" | "instagram" | "mail"
   socials: [
     { label: "GitHub", href: "https://github.com/eastminnn", icon: "github" },
     { label: "velog", href: "https://velog.io/@eastminn/posts", icon: "velog" },
@@ -79,7 +71,6 @@ export const profile = {
   ] satisfies (Link & { icon: IconName })[],
 };
 
-// 문단마다 하나의 문자열. \n을 넣으면 그 자리에서 줄이 바뀝니다. *별표*로 감싼 부분은 굵고 밝게 강조됩니다.
 export const about: string[] = [
   "트래픽이 몰려도 *조용히* 버티는 서버를 좋아합니다.\nAPI 설계부터 데이터 모델링, 배포 파이프라인까지\n서비스의 뒤편을 책임지는 일을 하고 있습니다.",
   "요즘은 *AI Agent*에 관심이 많습니다.\n특히 반복되는 업무가 쌓여 병목이 생기는 지점을 에이전트로 풀어내는 방법을 고민합니다.\n실제 업무에서 믿고 맡길 수 있을 만큼 튼튼하게 만드는 것이 목표입니다.",
@@ -104,7 +95,6 @@ export const experience: Experience[] = [
     logo: "/logos/likelion.png",
     description:
       "직접 만든 강의자료로 Java·Spring부터 배포, CI/CD까지 강의했습니다.\n멘티들의 해커톤 프로젝트에 피드백을 주며 개발을 도왔습니다.",
-    // 직접 만든 강의자료 (public/lectures/)
     links: [
       { label: "강의자료 · Swagger", href: "/lectures/swagger.pdf" },
       { label: "EC2", href: "/lectures/ec2.pdf" },
@@ -143,11 +133,19 @@ export const projects: Project[] = [
     href: "https://github.com/eastminnn/yufesta-server",
     image: "/projects/yufesta.jpg",
     badge: "축제 당일 2,080명",
-  },  {
+  },
+  {
     title: "in경산",
     description:
       "경산의 장인, 청년 사업가, 골목 상인을 만나는 인물 중심 로컬 관광 플랫폼입니다.\n백엔드를 맡아 소셜 로그인, 호스트 지도, 체험 예약 API를 만들고 EC2에 배포했습니다.\nPGVector와 OpenAI로 RAG를 구성해 문장 기반 체험 추천을 구현했습니다.",
-    tags: ["Spring Boot", "Spring AI", "MySQL", "PGVector", "AWS EC2", "Docker"],
+    tags: [
+      "Spring Boot",
+      "Spring AI",
+      "MySQL",
+      "PGVector",
+      "AWS EC2",
+      "Docker",
+    ],
     href: "https://github.com/InFrame-Team/InFrame-was",
     image: "/projects/ingyeongsan.jpg",
     badge: "융합 실무경진대회 최우수상",
@@ -165,11 +163,19 @@ export const projects: Project[] = [
     title: "낙찰",
     description:
       "2~4명이 실시간으로 인형 경매를 벌이는 3D 파티 게임입니다.\n입찰 순서와 마감, 정산은 서버가 판정하고 WebSocket으로 방 상태를 동기화했습니다.\n사용자→방 순서의 잠금과 잠금 밖 DB 처리로 교착과 지연 전파를 막았습니다.",
-    tags: ["Spring Boot", "WebSocket", "PostgreSQL", "Three.js", "TypeScript", "Oracle Cloud"],
+    tags: [
+      "Spring Boot",
+      "WebSocket",
+      "PostgreSQL",
+      "Three.js",
+      "TypeScript",
+      "Oracle Cloud",
+    ],
     href: "https://github.com/eastminnn/nackchal",
     links: [{ label: "플레이하기", href: "https://nackchal.duckdns.org" }],
     image: "/projects/nackchal.jpg",
-  },  {
+  },
+  {
     title: "Haggle98",
     description:
       "직접 쓴 한 문장으로 AI 상인과 흥정하는 PS1 감성의 웹 게임입니다.\nTypeSafe Jev로 문장의 의도를 분류하고, 가격과 성사 여부는 서버 규칙이 결정합니다.\nOpenAI가 거래 결과와 대화 기억을 바탕으로 상인의 대사와 표정을 만들어냅니다.",
@@ -178,12 +184,8 @@ export const projects: Project[] = [
     links: [{ label: "플레이하기", href: "https://haggle98.vercel.app" }],
     image: "/projects/haggle98.jpg",
   },
-
-
 ];
 
-// 학력, 수상, 자격증은 EDUCATION 섹션 하나에 함께 표시됩니다.
-// 모두 비워두면 섹션이 자동으로 숨겨집니다.
 export const education: Education[] = [
   {
     period: "2021.03 — 2027.02",
@@ -223,10 +225,7 @@ export const certifications: Certification[] = [
   { date: "2025.04", name: "SQLD", issuer: "한국데이터산업진흥원" },
 ];
 
-// 비워두면 "글" 섹션이 자동으로 숨겨집니다.
-export const writing: Writing[] = [
-  // { year: "2026", title: "글 제목", href: "https://velog.io/@eastminn/..." },
-];
+export const writing: Writing[] = [];
 
 export const footer =
   "Next.js와 Tailwind CSS로 만들고 GitHub Pages로 배포했습니다. 본문은 Pretendard 서체를 사용합니다.";

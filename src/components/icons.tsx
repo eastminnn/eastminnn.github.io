@@ -18,7 +18,6 @@ export function Icon({ name }: { name: IconName }) {
         </svg>
       );
     case "velog":
-      // velog 로고: 둥근 사각형 안의 V
       return (
         <svg {...base} fill="none">
           <rect x="2" y="2" width="20" height="20" rx="5" fill="currentColor" />

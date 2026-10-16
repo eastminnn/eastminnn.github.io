@@ -2,9 +2,6 @@
 
 import { useEffect, useRef } from "react";
 
-// 마우스를 따라다니는 조명. brittanychiang.com처럼 페이지 위에 덮이고(z-30),
-// 페이지 좌표를 써서 스크롤하면 조명도 콘텐츠와 함께 움직인다.
-// 리렌더 없이 CSS 변수만 갱신한다.
 export function Spotlight() {
   const ref = useRef<HTMLDivElement>(null);
 

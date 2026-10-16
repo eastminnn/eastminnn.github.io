@@ -7,7 +7,6 @@ export const metadata: Metadata = {
   description: profile.tagline.replace(/[*{}]/g, ""),
 };
 
-// 저장된 테마를 첫 렌더 전에 적용해서 깜빡임을 막는다
 const themeScript = `try{var t=localStorage.getItem("theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

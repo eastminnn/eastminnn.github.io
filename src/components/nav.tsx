@@ -3,12 +3,10 @@
 import { useEffect, useState } from "react";
 import { sections } from "./sections";
 
-// 데스크톱 왼쪽 메뉴. 지금 보고 있는 섹션의 선이 길어진다.
 export function Nav() {
   const [active, setActive] = useState(sections[0].id);
 
   useEffect(() => {
-    // 화면 40% 지점을 지난 마지막 섹션이 현재 섹션. 맨 아래에 닿으면 마지막 섹션.
     const update = () => {
       const atBottom =
         window.innerHeight + window.scrollY >=

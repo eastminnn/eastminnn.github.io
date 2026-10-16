@@ -2,8 +2,6 @@
 
 import { Children, useEffect, useRef, useState, type ReactNode } from "react";
 
-// 한 장씩 크게 보여주고 옆으로 넘기는 슬라이드.
-// 브라우저 기본 가로 스크롤(scroll-snap)을 써서 터치 스와이프, 트랙패드, 키보드가 그대로 동작한다.
 export function Carousel({
   children,
   label,
@@ -18,7 +16,6 @@ export function Carousel({
   useEffect(() => {
     const el = track.current;
     if (!el) return;
-    // 슬라이드 사이 간격(gap)까지 포함한 한 칸 너비로 현재 위치를 계산한다
     const onScroll = () => {
       const first = el.children[0] as HTMLElement | undefined;
       const second = el.children[1] as HTMLElement | undefined;
@@ -55,7 +52,6 @@ export function Carousel({
             e.preventDefault();
             go(index + step);
           }}
-          // 카드가 떠오르는 효과가 잘리지 않도록 위아래 여유를 둔다
           className="-my-3 flex gap-12 snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth py-3 outline-none [scrollbar-width:none] motion-reduce:scroll-auto [&::-webkit-scrollbar]:hidden"
         >
           {slides.map((slide, i) => (
@@ -99,7 +95,6 @@ export function Carousel({
   );
 }
 
-// 슬라이드 양옆의 < > 버튼. 넓은 화면에서는 카드 바깥, 좁은 화면에서는 카드 안쪽 가장자리에 놓인다.
 function ArrowButton({
   dir,
   onClick,

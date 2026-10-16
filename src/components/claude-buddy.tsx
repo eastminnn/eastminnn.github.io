@@ -1,7 +1,5 @@
 import type { ReactNode } from "react";
 
-// 직접 그린 픽셀 캐릭터 (Claude Code 마스코트 오마주). 공식 로고 파일은 쓰지 않는다.
-// # = 몸, E = 눈 자리(몸 색으로 칠한 뒤 위에 눈을 얹음), . = 빈칸
 const sprite = [
   "..#########..",
   "..#########..",
@@ -14,7 +12,6 @@ const sprite = [
   "...#.#.#.#...",
 ];
 
-// 몸은 하나의 path로 그려서 픽셀 사이에 틈(가는 줄)이 안 생기게 한다
 const bodyPath = sprite
   .flatMap((row, y) =>
     [...row].map((c, x) => (c === "." ? "" : `M${x} ${y}h1v1h-1z`)),
@@ -38,7 +35,6 @@ function Sprite() {
   );
 }
 
-// 마우스를 올리거나(키보드로 포커스하면) 위로 캐릭터가 튀어나오는 강조어
 export function ClaudeBuddy({ children }: { children: ReactNode }) {
   return (
     <span
