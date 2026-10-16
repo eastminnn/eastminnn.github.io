@@ -280,7 +280,7 @@ function SheetSection({
 const steps = [
   ["문제", "problem"],
   ["원인", "cause"],
-  ["해결", "solution"],
+  ["선택", "solution"],
   ["결과", "result"],
 ] as const;
 
