@@ -28,29 +28,31 @@ export function ProjectsSection() {
                   </span>
                 </div>
               )}
-              {project.badge && (
-                <span className="absolute top-3 left-3 rounded-full bg-bg/80 px-2.5 py-1 text-[11px] font-semibold text-fg backdrop-blur">
-                  ✦ {project.badge}
-                </span>
-              )}
             </div>
             <div className="flex flex-1 flex-col p-5">
-              <h3 className="text-lg leading-snug font-semibold text-fg">
-                {project.href ? (
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    aria-label={`${project.title} (새 창)`}
-                  >
-                    <span className="absolute inset-0 z-10" />
-                    {project.title}
-                    <Arrow />
-                  </a>
-                ) : (
-                  project.title
+              <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5">
+                <h3 className="text-lg leading-snug font-semibold text-fg">
+                  {project.href ? (
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label={`${project.title} (새 창)`}
+                    >
+                      <span className="absolute inset-0 z-10" />
+                      {project.title}
+                      <Arrow />
+                    </a>
+                  ) : (
+                    project.title
+                  )}
+                </h3>
+                {project.badge && (
+                  <span className="relative z-20 inline-flex shrink-0 rounded-full bg-fg px-2.5 py-1 text-[11px] leading-none font-semibold text-bg shadow-sm">
+                    {project.badge}
+                  </span>
                 )}
-              </h3>
+              </div>
               <p className="mt-2 flex-1 text-[15px] leading-[1.75] whitespace-pre-line">
                 {project.description}
               </p>
