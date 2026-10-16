@@ -2,10 +2,10 @@ import type { Contributions } from "@/lib/github";
 
 const levelClass = [
   "bg-surface",
-  "bg-fg/20",
-  "bg-fg/40",
-  "bg-fg/65",
-  "bg-fg/90",
+  "bg-fg/20 group-hover/graph:bg-contribution-1 group-focus-within/graph:bg-contribution-1",
+  "bg-fg/40 group-hover/graph:bg-contribution-2 group-focus-within/graph:bg-contribution-2",
+  "bg-fg/65 group-hover/graph:bg-contribution-3 group-focus-within/graph:bg-contribution-3",
+  "bg-fg/90 group-hover/graph:bg-contribution-4 group-focus-within/graph:bg-contribution-4",
 ] as const;
 
 const formatDate = (date: string) => date.replaceAll("-", ".");
@@ -29,7 +29,7 @@ export function ContributionGraph({
   const rangeLabel = weeks >= 52 ? "지난 1년간" : `최근 ${months}개월`;
 
   return (
-    <div>
+    <div className="group/graph">
       <div
         className="grid grid-flow-col grid-rows-7 gap-[3px]"
         style={{ gridTemplateColumns: `repeat(${weeks}, minmax(0, 1fr))` }}

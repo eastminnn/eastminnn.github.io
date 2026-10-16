@@ -36,7 +36,7 @@ export function Sidebar({
         <CommandPalette />
         <Nav />
         {contributions && (
-          <div className="rise mt-24" style={{ "--i": 4 } as CSSProperties}>
+          <div className="rise mt-28" style={{ "--i": 4 } as CSSProperties}>
             <ContributionGraph
               data={contributions}
               username={profile.github}

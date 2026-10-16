@@ -3,7 +3,7 @@ import { profile } from "@/content";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `${profile.name} · ${profile.role}`,
+  title: profile.name,
   description: profile.tagline.replace(/[*{}]/g, ""),
 };
 
