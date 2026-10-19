@@ -4,6 +4,7 @@ import { ContributionGraph } from "@/components/contribution-graph";
 import { Icon } from "@/components/icons";
 import { Nav } from "@/components/nav";
 import { Rich } from "@/components/rich";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { profile } from "@/content";
 import type { Contributions } from "@/lib/github";
 
@@ -70,6 +71,9 @@ export function Sidebar({
             </li>
           );
         })}
+        <li className="ml-1 border-l border-line pl-6">
+          <ThemeToggle />
+        </li>
       </ul>
     </header>
   );

@@ -4,18 +4,7 @@ import { Command } from "cmdk";
 import { useCallback, useEffect, useState } from "react";
 import { profile, projects, writing } from "@/content";
 import { sections } from "./sections";
-
-type Theme = "system" | "light" | "dark";
-
-function applyTheme(theme: Theme) {
-  const root = document.documentElement;
-  try {
-    if (theme === "system") localStorage.removeItem("theme");
-    else localStorage.setItem("theme", theme);
-  } catch {}
-  if (theme === "system") delete root.dataset.theme;
-  else root.dataset.theme = theme;
-}
+import { applyTheme } from "./theme-toggle";
 
 const itemClass =
   "flex cursor-pointer items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-[15px] text-dim";

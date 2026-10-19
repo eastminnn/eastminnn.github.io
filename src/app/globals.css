@@ -341,3 +341,30 @@ em {
     animation: none;
   }
 }
+
+.theme-sun {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-sun {
+  display: inline;
+}
+
+:root[data-theme="dark"] .theme-moon {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-sun {
+    display: inline;
+  }
+
+  :root:not([data-theme="light"]) .theme-moon {
+    display: none;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
