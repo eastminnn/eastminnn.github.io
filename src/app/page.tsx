@@ -1,6 +1,7 @@
 import { EducationSection } from "@/components/portfolio/education-section";
 import { ExperienceSection } from "@/components/portfolio/experience-section";
 import { IntroSection } from "@/components/portfolio/intro-section";
+import { OpenSourceSection } from "@/components/portfolio/open-source-section";
 import { ProjectSheet } from "@/components/portfolio/project-sheet";
 import { ProjectsSection } from "@/components/portfolio/projects-section";
 import { Sidebar } from "@/components/portfolio/sidebar";
@@ -28,6 +29,7 @@ export default async function Home() {
             <IntroSection />
             <ExperienceSection />
             <ProjectsSection />
+            <OpenSourceSection />
             <WritingSection />
             <EducationSection />
 

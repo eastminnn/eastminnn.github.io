@@ -73,6 +73,20 @@ export type Award = {
   description?: string;
 };
 
+export type OpenSource = {
+  date: string;
+  owner: string;
+  repo: string;
+  stars: string;
+  pr: number;
+  prTitle: string;
+  href: string;
+  diff: { additions: number; deletions: number };
+  description: string;
+  metrics: { label: string; before: string; after: string }[];
+  tags: string[];
+};
+
 export type Writing = {
   year: string;
   title: string;
@@ -377,6 +391,26 @@ export const certifications: Certification[] = [
     issuer: "NAVER Cloud",
   },
   { date: "2025.04", name: "SQLD", issuer: "한국데이터산업진흥원" },
+];
+
+export const openSource: OpenSource[] = [
+  {
+    date: "2026.10",
+    owner: "MadsLorentzen",
+    repo: "ai-job-search",
+    stars: "5.8만",
+    pr: 690,
+    prTitle: "fix(tools): decode saved non-UTF-8 pages by their declared charset",
+    href: "https://github.com/MadsLorentzen/ai-job-search/pull/690",
+    diff: { additions: 227, deletions: 11 },
+    description:
+      "EUC-KR 같은 비 UTF-8 채용공고가 깨진 채로 프롬프트 인젝션 검사를 \"clean\"으로 통과하던 문제를 실제 채용 사이트로 재현해 고쳤습니다. UTF-8을 먼저 시도하고 허용한 charset만 쓰도록 해 기존 페이지 동작은 바꾸지 않았습니다.",
+    metrics: [
+      { label: "깨진 문자", before: "1,206", after: "0" },
+      { label: "읽힌 한글", before: "4", after: "905" },
+    ],
+    tags: ["Python", "Security", "Encoding"],
+  },
 ];
 
 export const writing: Writing[] = [];

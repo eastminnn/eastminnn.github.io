@@ -15,7 +15,7 @@ export function EducationSection() {
   }
 
   return (
-    <PortfolioSection id="education" index={4}>
+    <PortfolioSection id="education" index={5}>
       {education.length > 0 && (
         <section>
           <h3 className="mb-6 text-[17px] font-bold text-fg">학력</h3>

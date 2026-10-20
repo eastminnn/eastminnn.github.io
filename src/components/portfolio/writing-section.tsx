@@ -11,7 +11,7 @@ export function WritingSection() {
   if (writing.length === 0) return null;
 
   return (
-    <PortfolioSection id="writing" index={3}>
+    <PortfolioSection id="writing" index={4}>
       <ul className={listClass}>
         {writing.map((article) => (
           <li key={article.title} className={itemClass}>
