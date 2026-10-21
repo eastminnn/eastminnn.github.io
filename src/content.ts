@@ -398,7 +398,7 @@ export const openSource: OpenSource[] = [
     date: "2026.10",
     owner: "MadsLorentzen",
     repo: "ai-job-search",
-    stars: "5.8만",
+    stars: "6.1만",
     pr: 690,
     prTitle: "fix(tools): decode saved non-UTF-8 pages by their declared charset",
     href: "https://github.com/MadsLorentzen/ai-job-search/pull/690",
