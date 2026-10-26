@@ -130,7 +130,7 @@ export const experience: Experience[] = [
   },
   {
     period: "2026.01 — 2026.12",
-    role: "백엔드 멘토",
+    role: "백엔드 운영진",
     company: "멋쟁이사자처럼 영남대학교",
     href: "https://www.instagram.com/likelion_yu/",
     logo: "/logos/likelion.png",
@@ -398,7 +398,7 @@ export const openSource: OpenSource[] = [
     date: "2026.10",
     owner: "MadsLorentzen",
     repo: "ai-job-search",
-    stars: "6.1만",
+    stars: "6.6만",
     pr: 690,
     prTitle: "fix(tools): decode saved non-UTF-8 pages by their declared charset",
     href: "https://github.com/MadsLorentzen/ai-job-search/pull/690",
