@@ -9,7 +9,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import type { Project, Troubleshooting } from "@/content";
-import { Tags } from "./shared";
+import { LiveBadge, Tags } from "./shared";
 
 const HASH_PREFIX = "#p-";
 const HASH_CLEARED = "portfolio:hash-cleared";
@@ -136,6 +136,7 @@ export function ProjectSheet({ projects }: { projects: Project[] }) {
               <h2 className="text-3xl font-bold tracking-tight text-fg">
                 {project.title}
               </h2>
+              {project.live && <LiveBadge />}
               {project.badge && (
                 <span className="rounded-full bg-fg px-2.5 py-1 text-[11px] leading-none font-semibold text-bg">
                   {project.badge}
@@ -147,19 +148,7 @@ export function ProjectSheet({ projects }: { projects: Project[] }) {
               {[detail.role, detail.period].filter(Boolean).join(" · ")}
             </p>
             <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-[14px]">
-              {project.href && (
-                <li>
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="font-medium text-fg/85 hover:text-fg"
-                  >
-                    GitHub ↗
-                  </a>
-                </li>
-              )}
-              {project.links?.map((link) => (
+              {sheetLinks(project).map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -172,7 +161,7 @@ export function ProjectSheet({ projects }: { projects: Project[] }) {
                 </li>
               ))}
             </ul>
-            <Tags tags={project.tags} />
+            <Tags tags={project.tags} className="mt-6 gap-2" />
           </header>
 
           <SheetSection title="개요">
@@ -194,7 +183,9 @@ export function ProjectSheet({ projects }: { projects: Project[] }) {
           </SheetSection>
 
           {detail.capacity && (
-            <SheetSection title="설계 기준과 예상 부하">
+            <SheetSection
+              title={detail.capacity.title ?? "설계 기준과 예상 부하"}
+            >
               <dl className="grid gap-3 sm:grid-cols-2">
                 {detail.capacity.items.map((item) => (
                   <div
@@ -220,6 +211,46 @@ export function ProjectSheet({ projects }: { projects: Project[] }) {
                   {detail.capacity.footnote}
                 </p>
               )}
+              {detail.capacity.link && (
+                <a
+                  href={detail.capacity.link.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="mt-3 inline-block text-[14px] font-medium text-fg/85 hover:text-fg"
+                >
+                  {detail.capacity.link.label} ↗
+                </a>
+              )}
+            </SheetSection>
+          )}
+
+          {detail.flow && (
+            <SheetSection title={detail.flow.title}>
+              <ol className="space-y-2 text-[15px] leading-[1.7]">
+                {detail.flow.steps.map((step, index) => (
+                  <li key={step} className="flex gap-3">
+                    <span className="mt-[0.2em] grid size-5 shrink-0 place-items-center rounded-full bg-fg/10 text-[11px] font-semibold text-fg">
+                      {index + 1}
+                    </span>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+              <ul className="mt-5 space-y-3">
+                {detail.flow.reasons.map((reason) => (
+                  <li
+                    key={reason.title}
+                    className="rounded-xl border border-line bg-card px-5 py-4"
+                  >
+                    <p className="text-[15px] font-semibold text-fg">
+                      {reason.title}
+                    </p>
+                    <p className="mt-1.5 text-[14.5px] leading-[1.75]">
+                      {reason.description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </SheetSection>
           )}
 
@@ -243,21 +274,30 @@ export function ProjectSheet({ projects }: { projects: Project[] }) {
             </SheetSection>
           )}
 
-          <SheetSection title="문제 해결">
-            <ol className="space-y-5">
-              {detail.troubleshooting.map((item, index) => (
-                <TroubleshootingCard
-                  key={item.title}
-                  item={item}
-                  index={index}
-                />
-              ))}
-            </ol>
-          </SheetSection>
+          {detail.troubleshooting.length > 0 && (
+            <SheetSection title="문제 해결">
+              <ol className="space-y-5">
+                {detail.troubleshooting.map((item, index) => (
+                  <TroubleshootingCard
+                    key={item.title}
+                    item={item}
+                    index={index}
+                  />
+                ))}
+              </ol>
+            </SheetSection>
+          )}
         </article>
       </div>
     </div>
   );
+}
+
+// 서비스 링크가 있으면 GitHub보다 먼저 보여준다.
+function sheetLinks({ href, links = [] }: Project) {
+  const [first, ...rest] = links;
+  const github = href ? [{ label: "GitHub", href }] : [];
+  return first ? [first, ...github, ...rest] : github;
 }
 
 function SheetSection({

@@ -91,6 +91,23 @@ export function OpenSourceSection() {
                 ))}
               </dl>
 
+              {item.post && (
+                <a
+                  href={item.post.href}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="group/link relative z-20 mt-3 inline-block text-[13px] font-medium text-fg/85 transition-colors hover:text-fg"
+                >
+                  {item.post.label}
+                  <span
+                    aria-hidden
+                    className="ml-1 inline-block text-[0.85em] transition-transform duration-200 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+                  >
+                    ↗
+                  </span>
+                </a>
+              )}
+
               <Tags tags={item.tags} />
             </div>
           </li>

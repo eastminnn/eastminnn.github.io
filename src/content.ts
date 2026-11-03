@@ -10,7 +10,6 @@ export type Experience = {
   href?: string;
   description: string;
   links?: Link[];
-  tags: string[];
 };
 
 export type Troubleshooting = {
@@ -23,8 +22,16 @@ export type Troubleshooting = {
 };
 
 export type Capacity = {
+  title?: string;
+  link?: Link;
   items: { label: string; value: string; note?: string }[];
   footnote?: string;
+};
+
+export type Flow = {
+  title: string;
+  steps: string[];
+  reasons: { title: string; description: string }[];
 };
 
 export type ProjectDetail = {
@@ -34,6 +41,7 @@ export type ProjectDetail = {
   overview: string;
   tasks: string[];
   capacity?: Capacity;
+  flow?: Flow;
   designPoints?: { title: string; description: string }[];
   troubleshooting: Troubleshooting[];
 };
@@ -47,6 +55,7 @@ export type Project = {
   links?: Link[];
   image?: string;
   badge?: string;
+  live?: boolean;
   detail?: ProjectDetail;
 };
 
@@ -84,6 +93,7 @@ export type OpenSource = {
   diff: { additions: number; deletions: number };
   description: string;
   metrics: { label: string; before: string; after: string }[];
+  post?: Link;
   tags: string[];
 };
 
@@ -103,18 +113,13 @@ export const profile = {
   socials: [
     { label: "GitHub", href: "https://github.com/eastminnn", icon: "github" },
     { label: "velog", href: "https://velog.io/@eastminn/posts", icon: "velog" },
-    {
-      label: "Instagram",
-      href: "https://www.instagram.com/eastminnn/",
-      icon: "instagram",
-    },
     { label: "Email", href: "mailto:oh1334000@gmail.com", icon: "mail" },
   ] satisfies (Link & { icon: IconName })[],
 };
 
 export const about: string[] = [
-  "트래픽이 몰려도 *조용히* 버티는 서버를 좋아합니다.\nAPI 설계부터 데이터 모델링, 배포 파이프라인까지\n서비스의 뒤편을 책임지는 일을 하고 있습니다.",
-  "요즘은 *AI Agent*에 관심이 많습니다.\n특히 반복되는 업무가 쌓여 병목이 생기는 지점을 에이전트로 풀어내는 방법을 고민합니다.\n실제 업무에서 믿고 맡길 수 있을 만큼 튼튼하게 만드는 것이 목표입니다.",
+  "실제 사용자가 쓰는 서비스를 만들고, *직접 운영*합니다.\n설계부터 배포, 모니터링까지 서비스의 뒤편을 책임집니다.\n공개한 뒤에도 지표와 로그를 보며 문제를 먼저 찾아 고치는 일을 중요하게 생각합니다.",
+  "처음 다루는 기술도 실제 서비스에 붙여 보며 익힙니다.\n최근에는 반복 업무의 병목을 *AI Agent*로 푸는 일에 관심이 많습니다.\n데모에서 끝나지 않고, 실제 업무에 믿고 맡길 수 있게 만드는 것이 목표입니다.",
 ];
 
 export const experience: Experience[] = [
@@ -126,7 +131,6 @@ export const experience: Experience[] = [
     href: "http://solfac.co.kr/",
     description:
       "웹 서비스의 백엔드 기능 개발과 API 구현,\n데이터베이스 연동 및 유지보수를 담당하고 있습니다.",
-    tags: ["Java", "Spring", "MySQL"],
   },
   {
     period: "2026.01 — 2026.12",
@@ -141,7 +145,6 @@ export const experience: Experience[] = [
       { label: "EC2", href: "/lectures/ec2.pdf" },
       { label: "CI/CD", href: "/lectures/cicd.pdf" },
     ],
-    tags: ["Swagger", "AWS EC2", "Docker", "GitHub Actions"],
   },
   {
     period: "2026.01",
@@ -151,7 +154,6 @@ export const experience: Experience[] = [
     href: "http://www.takensoft.co.kr/",
     description:
       "USDT를 활용한 외국인 대상 결제·출금 서비스의 백엔드를 개발하고,\n서비스 화면 설계와 디자인을 담당했습니다.",
-    tags: ["Spring Boot", "JPA", "MySQL", "Spring AI", "TRON", "Figma"],
   },
   {
     period: "2025.03 — 2025.12",
@@ -161,11 +163,108 @@ export const experience: Experience[] = [
     logo: "/logos/likelion.png",
     description:
       "Spring Boot와 JPA 중심의 세션과 과제로 백엔드 기초를 다졌습니다.\n교육을 마친 뒤 팀을 꾸려 전국 대학 연합 해커톤에 참가했습니다.",
-    tags: ["Spring Boot", "JPA", "MySQL", "AWS"],
   },
 ];
 
 export const projects: Project[] = [
+  {
+    slug: "bingang",
+    title: "빈강",
+    description:
+      "영남대 빈 강의실과 남은 시간을 알려주는 서비스를 혼자 만들어 운영하고 있습니다.\n기획 단계에서 예상 TPS를 계산해 부하 테스트를 하고, 배포 후 실제 TPS와 비교했습니다.\n서버에 이상이 생기면 Discord 웹훅으로 알림을 받아 바로 조치하고 있습니다.",
+    tags: [
+      "Spring Boot",
+      "PostgreSQL",
+      "Docker",
+      "Oracle Cloud",
+      "Grafana",
+      "k6",
+    ],
+    href: "https://github.com/eastminnn/bingang",
+    links: [{ label: "서비스 바로가기", href: "https://bingang.duckdns.org" }],
+    image: "/projects/bingang.jpg",
+    badge: "하루 평균 사용자 약 250명",
+    live: true,
+    detail: {
+      summary: "영남대의 지금 빈 강의실과 남은 시간을 알려주는 웹 서비스",
+      role: "기획 · 개발 · 운영 (1인)",
+      period: "2026.10 — 운영 중",
+      overview:
+        "공강 시간에 건물을 돌며 빈 강의실을 찾던 불편을 풀기 위해 만들었습니다. 학교 시간표를 주기적으로 수집해 건물별 빈 강의실과 언제까지 비는지를 보여줍니다. 하루 평균 약 250명의 학생이 사용하고 있으며, 사용자 피드백을 받아 계속 개선하고 있습니다.",
+      tasks: [
+        "'빈 강의실 조회' 결과를 뒤집어 강의실별 시간표를 복원하는 수집기",
+        "연강 병합과 보강일 요일 대체를 반영한 판정 로직과 테스트",
+        "Oracle Cloud A1에 Docker Compose, Caddy HTTPS, GitHub Actions 자동 배포",
+        "k6 부하 테스트, Prometheus·Grafana·Loki 모니터링과 Discord 장애 알림",
+      ],
+      capacity: {
+        title: "서버와 트래픽",
+        link: {
+          label: "관련해서 작성한 기술 블로그 글",
+          href: "https://velog.io/@eastminn/project-2",
+        },
+        items: [
+          {
+            label: "서버",
+            value: "OCI A1 · 2 OCPU · 12GB",
+            note: "arm64",
+          },
+          {
+            label: "부하 테스트",
+            value: "400 TPS · 오류 0%",
+            note: "서버 p95 8.1ms · CPU 최대 75%",
+          },
+          {
+            label: "예상 피크",
+            value: "100 TPS",
+            note: "하루 3,000명 가정 · 평소 피크 10 TPS",
+          },
+          {
+            label: "실제 피크",
+            value: "2.56 TPS",
+            note: "공개 후 24시간 · 421명 · 서버 p95 11.5ms",
+          },
+        ],
+        footnote:
+          "실제 피크는 1분 평균 최댓값이고, 부하 테스트는 50 → 400 TPS 단계적 증가로 측정했습니다.",
+      },
+      designPoints: [
+        {
+          title: "없는 시간표를 만들어 내기",
+          description:
+            "학교 시스템은 시간 칸별 빈 강의실 목록만 알려주고 강의실별 시간표는 주지 않습니다. 요일 6일 × 시간 칸 24개, 144번을 조회한 뒤 결과를 뒤집어 강의실별 사용 시간을 복원했습니다.",
+        },
+        {
+          title: "학교 시스템과 분리하기",
+          description:
+            "사용자 요청은 우리 DB만 조회하고, 학교 시스템에는 수집기만 1초에 1건 이하로 접근합니다. 조회가 하나라도 실패하거나 모든 칸의 결과가 같으면 저장하지 않고 이전 데이터를 유지합니다.",
+        },
+        {
+          title: "정확한 판정 규칙",
+          description:
+            "학교 홈페이지의 학사 일정을 매일 따로 수집해, 보강일에는 그날 요일 대신 지정된 요일의 시간표로 판정합니다. 이어진 수업은 하나로 합쳐 언제부터 비는지 계산하고, 시간대는 서버와 관계없이 한국 시간으로 고정했습니다.",
+        },
+      ],
+      troubleshooting: [
+        {
+          title: "DB 장애 때 모니터링까지 함께 멈추는 문제",
+          problem:
+            "장애 실험으로 DB를 멈추자, 앱은 살아 있는데 모니터링에서는 서버 전체가 다운으로 보였습니다.",
+          cause:
+            "지표를 만들 때마다 DB를 조회해, DB가 멈추면 장애를 보여줘야 할 지표까지 함께 사라졌습니다.",
+          solution:
+            "장애를 알려야 할 지표가 장애 대상에 기대지 않도록, 지표 값은 메모리에 두고 DB와는 필요한 순간에만 주고받게 바꿨습니다.",
+          result:
+            "지표 수집 중 DB 조회가 하루 5,760회에서 기동 시 1회로 줄었고, DB 장애 중에도 지표가 유지되어 원인을 바로 확인할 수 있습니다.",
+          metric: {
+            label: "지표 수집 중 DB 조회 · 하루",
+            before: "5,760회",
+            after: "기동 시 1회",
+          },
+        },
+      ],
+    },
+  },
   {
     slug: "yufesta",
     title: "YU FESTA",
@@ -234,120 +333,74 @@ export const projects: Project[] = [
     href: "https://github.com/InFrame-Team/InFrame-was",
     image: "/projects/ingyeongsan.jpg",
     badge: "융합 실무경진대회 최우수상",
-  },
-  {
-    slug: "bridgee",
-    title: "Bridgee",
-    description:
-      "경산 소상공인이 공모전으로 도움을 요청하고 학생이 작품으로 참여하는 플랫폼입니다.\n백엔드를 맡아 공모전 관리, 마감 후 상태 전환 스케줄러, 우승자 보상 기능을 만들었습니다.\nERD를 설계하고 GitHub Actions로 CI/CD를 구성해 AWS EC2에 배포했습니다.",
-    tags: ["Spring Boot", "JPA", "MySQL", "AWS EC2", "GitHub Actions"],
-    href: "https://github.com/Likelion-YeungNam-Univ/CoCoNut-was",
-    image: "/projects/bridgee.jpg",
-    badge: "멋사 연합 해커톤 2차 진출",
-  },
-  {
-    slug: "nackchal",
-    title: "낙찰",
-    description:
-      "2~4명이 실시간으로 인형 경매를 벌이는 3D 파티 게임입니다.\n입찰 순서와 마감, 정산은 서버가 판정하고 WebSocket으로 방 상태를 동기화했습니다.\n사용자→방 순서의 잠금과 잠금 밖 DB 처리로 교착과 지연 전파를 막았습니다.",
-    tags: [
-      "Spring Boot",
-      "WebSocket",
-      "PostgreSQL",
-      "Three.js",
-      "TypeScript",
-      "Oracle Cloud",
-    ],
-    href: "https://github.com/eastminnn/nackchal",
-    links: [{ label: "플레이하기", href: "https://nackchal.duckdns.org" }],
-    image: "/projects/nackchal.jpg",
     detail: {
-      summary: "2~4명이 실시간으로 인형 경매를 벌이는 3D 파티 게임",
-      role: "기획 · 백엔드 · 프론트엔드",
+      summary:
+        "경산의 장인, 청년 사업가, 골목 상인을 만나는 인물 중심 로컬 관광 플랫폼",
+      role: "백엔드 (7인 팀, 백엔드 1인)",
+      period: "2025.09 — 2025.11",
       overview:
-        "겉모습만 보고 값을 매겨 친구보다 한 푼 더 불러 낙찰받는 경매 게임입니다. 10라운드 동안 물건이 하나씩 오르고, 낙찰 5초 뒤 공개되는 실제 가치와 낙찰가의 차이가 손익이 됩니다. 입찰 순서, 마감, 숨은 가치, 정산은 모두 서버가 판정합니다.",
+        "장소가 아닌 사람을 중심으로 여행하는 서비스입니다. 지도에서 지역 호스트를 찾고, 그들이 여는 체험을 예약하며, 문장으로 원하는 체험을 추천받을 수 있습니다. 추천은 체험 정보를 임베딩해 PGVector에 저장하고 입력 문장과 비슷한 체험을 찾는 RAG 방식으로 구현했습니다. 백엔드를 혼자 맡아 설계부터 배포까지 진행했고, 영남대 융합 그룹 실무경진대회에서 최우수상을 받았습니다.",
       tasks: [
-        "WebSocket 실시간 프로토콜과 방·대기실·재접속(30초 유예) 처리",
-        "Spring 없는 순수 객체로 경매 규칙을 분리해 결정적으로 테스트",
-        "캐시 원장과 상점, 아이템 던지기의 트랜잭션·중복 처리 설계",
-        "JWT 쿠키 인증과 refresh 토큰 교체, CSRF, WebSocket Origin 검증",
-        "React Three Fiber로 3D 경매장 장면과 연출 구현",
-        "Oracle Cloud 운영 서버, HTTPS, 자동 배포와 DB 백업 구성",
+        "카카오·네이버 소셜 로그인과 JWT 인증",
+        "국세청 사업자 상태 조회 API로 검증한 뒤 호스트로 전환, 체험을 가진 호스트만 보여주는 지도",
+        "체험 예약·취소와 끝난 예약을 매시간 완료로 바꾸는 스케줄러",
+        "PGVector와 OpenAI 임베딩으로 문장 기반 체험 추천(RAG)",
+        "S3 이미지 업로드, GitHub Actions와 Docker로 EC2 자동 배포",
       ],
-      capacity: {
-        items: [
+      flow: {
+        title: "RAG 추천 구성",
+        steps: [
+          "체험을 등록하면 호스트 정보(이름, 카테고리, 소개, 위치)와 체험 정보(제목, 설명, 분야, 가격, 소요 시간, 인원)를 하나의 문장으로 만듭니다.",
+          "이 문장을 OpenAI text-embedding-3-small로 임베딩해, 체험 ID와 함께 PGVector에 저장합니다.",
+          '사용자가 "조용한 곳에서 힐링하고 싶어"처럼 문장을 입력하면, 같은 방식으로 임베딩해 가장 비슷한 체험을 찾습니다.',
+          "찾은 체험 ID로 MySQL에서 최신 정보를 조회하고, 비슷한 순서대로 응답합니다.",
+        ],
+        reasons: [
           {
-            label: "서버",
-            value: "ARM VM 1대",
-            note: "Oracle Cloud · 2 OCPU · 12GB",
+            title: "키워드가 아닌 의미로 찾기",
+            description:
+              '사용자는 "힐링", "친구랑"처럼 체험 제목에 없는 말로 원하는 걸 설명합니다. 키워드 검색으로는 찾을 수 없어, 문장의 의미가 가까운 체험을 찾는 임베딩 검색을 택했습니다.',
           },
           {
-            label: "동시 접속 상한",
-            value: "4,000명",
-            note: "방 1,000개 × 방당 4명",
+            title: "체험만이 아닌 호스트까지 함께 임베딩",
+            description:
+              'in경산은 사람을 보고 체험을 고르는 서비스라, 체험 설명만으로는 부족합니다. 호스트의 소개와 카테고리까지 한 문장에 넣어 "장인에게 배우는" 같은 요청에도 맞는 결과가 나오게 했습니다.',
           },
           {
-            label: "입찰 처리 (상한 부하)",
-            value: "초당 약 4,000건",
-            note: "참가자당 초당 1회 입찰 가정 · 방송은 초당 약 16,000건",
-          },
-          {
-            label: "연결당 메시지 제한",
-            value: "초당 20개",
-            note: "초과 요청은 서버에서 거절",
-          },
-          {
-            label: "DB 쓰기 (상한 부하)",
-            value: "초당 약 7건",
-            note: "판 시작과 정산만 기록 · 한 판 약 4분 40초",
-          },
-          {
-            label: "경매 타이머",
-            value: "100ms 주기",
-            note: "방 1,000개 기준 초당 1만 번 마감 확인",
+            title: "답은 지어내지 않고 실제 데이터로",
+            description:
+              "LLM이 추천 문장을 생성하면 없는 체험이나 틀린 가격을 말할 수 있습니다. 검색 결과의 ID로 MySQL의 실제 데이터만 응답해, 추천에는 실제로 등록된 체험과 현재 가격만 나옵니다.",
           },
         ],
-        footnote:
-          "코드에 정한 상한과 서버 스펙으로 계산한 값이며, 부하 테스트로 측정한 수치는 아닙니다.",
       },
       designPoints: [
         {
-          title: "DB 작업은 잠금 밖에서",
+          title: "검색용 저장소와 원본 데이터 분리",
           description:
-            "'잠금 안에서 확인 → 잠금 밖에서 트랜잭션 → 다시 잠가 반영' 3단계로 나눠, 한 방의 DB 지연이 다른 방의 타이머와 방송으로 번지지 않게 했습니다.",
+            "체험 정보는 MySQL에 두고, 추천용 문장과 임베딩만 PostgreSQL(PGVector)에 따로 저장했습니다. 유사도 검색으로 찾은 체험 ID로 MySQL에서 호스트까지 한 번에 조회하고, 추천 순서는 그대로 유지합니다.",
         },
         {
-          title: "고정된 잠금 순서와 한 번만 하는 정산",
+          title: "추천 실패가 체험 등록을 막지 않게",
           description:
-            "잠금은 항상 '사용자 → 방' 순서로 잡고, 정산은 게임 행을 FOR UPDATE로 잠근 뒤 RUNNING일 때만 처리해 교착과 이중 지급을 막았습니다.",
+            "체험을 등록할 때 임베딩 API가 실패해도 체험 저장은 롤백하지 않습니다. 외부 AI 서비스의 장애가 핵심 기능인 등록까지 번지지 않도록 했습니다.",
         },
         {
-          title: "예약 없는 경매 타이머",
+          title: "취소된 자리는 다시 예약 가능하게",
           description:
-            "마감을 예약하지 않고 100ms마다 현재 마감 시각과 비교해, 시간이 연장돼도 라운드가 두 번 마감되지 않게 했습니다.",
+            "같은 시간대 예약 여부를 확인할 때 취소된 예약은 제외해, 누군가 취소한 시간대를 다른 사용자가 다시 예약할 수 있도록 했습니다.",
         },
       ],
       troubleshooting: [
         {
-          title: "게임 중에 WebSocket 연결이 끊기는 문제",
-          problem: "게임 도중 연결이 4401로 끊기고 준비 상태가 풀렸습니다.",
-          cause:
-            "연결의 인증 만료가 처음 연결할 때의 JWT 만료(최대 15분)로 고정돼, 토큰을 갱신해도 열린 연결에는 반영되지 않았습니다.",
-          solution:
-            "토큰 수명을 늘리면 탈취됐을 때 위험이 커지고, 만료 때마다 재연결시키면 게임 중 준비 상태가 풀리는 문제가 그대로 남습니다. 그래서 토큰은 15분으로 두고, 갱신할 때 이벤트를 발행해 같은 계정의 열린 연결 만료만 연장했습니다. 프론트는 만료 1분 전에 미리 갱신합니다.",
-          result:
-            "게임 중 인증 만료로 끊기는 일이 사라졌고, 통합 테스트로 연장 동작을 검증했습니다.",
-        },
-        {
-          title: "서버 재시작 직후 시작한 게임이 보상 없이 끝나는 문제",
+          title: "같은 이메일로 다른 소셜 로그인을 하면 실패하는 문제",
           problem:
-            "서버가 뜨자마자 시작된 게임이 ABORTED로 바뀌고 보상 없이 정산됐습니다.",
+            "카카오로 가입한 사용자가 같은 이메일의 네이버 계정으로 로그인하면 오류가 나서, 둘 중 하나로만 로그인할 수 있었습니다.",
           cause:
-            "기동 시 미완료 게임을 정리하는데, 웹 서버가 ApplicationReadyEvent보다 먼저 요청을 받아 방금 시작된 게임까지 정리 대상에 섞였습니다.",
+            "소셜 계정 ID로만 기존 사용자를 찾아, 처음 보는 소셜 계정이면 같은 이메일로 새 사용자를 만들려다 이메일 중복에 걸렸습니다.",
           solution:
-            "정리 작업을 더 일찍 실행하는 방식은 Spring 기동 순서에 계속 의존하게 됩니다. 대신 '이번 실행 전에 시작한 판'을 시각으로 정의해, 정리기 생성 시각보다 먼저 시작한 판만 정리하게 했습니다. 기동 순서가 바뀌어도 안전합니다.",
+            "이메일 중복 제약을 풀면 한 사람이 계정 두 개를 갖게 됩니다. 그래서 제약은 유지하고, 소셜 계정으로 찾지 못하면 이메일로 한 번 더 찾아 기존 계정으로 로그인하게 했습니다.",
           result:
-            "이번 실행에서 시작한 게임은 정리되지 않고, 테스트로 경계 조건을 고정했습니다.",
+            "카카오와 네이버 어느 쪽으로 로그인해도 같은 계정으로 이어지고, 한 사람의 계정이 둘로 나뉘지 않습니다.",
         },
       ],
     },
@@ -396,19 +449,24 @@ export const certifications: Certification[] = [
 export const openSource: OpenSource[] = [
   {
     date: "2026.10",
-    owner: "MadsLorentzen",
+    owner: "ai-job-search-dev",
     repo: "ai-job-search",
-    stars: "6.6만",
+    stars: "6.9만",
     pr: 690,
-    prTitle: "fix(tools): decode saved non-UTF-8 pages by their declared charset",
-    href: "https://github.com/MadsLorentzen/ai-job-search/pull/690",
+    prTitle:
+      "fix(tools): decode saved non-UTF-8 pages by their declared charset",
+    href: "https://github.com/ai-job-search-dev/ai-job-search/pull/690",
     diff: { additions: 227, deletions: 11 },
     description:
-      "EUC-KR 같은 비 UTF-8 채용공고가 깨진 채로 프롬프트 인젝션 검사를 \"clean\"으로 통과하던 문제를 실제 채용 사이트로 재현해 고쳤습니다. UTF-8을 먼저 시도하고 허용한 charset만 쓰도록 해 기존 페이지 동작은 바꾸지 않았습니다.",
+      'EUC-KR 같은 비 UTF-8 채용공고가 깨진 채로 프롬프트 인젝션 검사를 "clean"으로 통과하던 문제를 실제 채용 사이트로 재현해 고쳤습니다. UTF-8을 먼저 시도하고 허용한 charset만 쓰도록 해 기존 페이지 동작은 바꾸지 않았습니다.',
     metrics: [
       { label: "깨진 문자", before: "1,206", after: "0" },
       { label: "읽힌 한글", before: "4", after: "905" },
     ],
+    post: {
+      label: "관련해서 작성한 기술 블로그 글",
+      href: "https://velog.io/@eastminn/opensource",
+    },
     tags: ["Python", "Security", "Encoding"],
   },
 ];

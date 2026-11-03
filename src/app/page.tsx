@@ -6,7 +6,6 @@ import { ProjectSheet } from "@/components/portfolio/project-sheet";
 import { ProjectsSection } from "@/components/portfolio/projects-section";
 import { Sidebar } from "@/components/portfolio/sidebar";
 import { WritingSection } from "@/components/portfolio/writing-section";
-import { Spotlight } from "@/components/spotlight";
 import { footer, profile, projects } from "@/content";
 import { getContributions } from "@/lib/github";
 
@@ -17,7 +16,6 @@ export default async function Home() {
 
   return (
     <div className="relative">
-      <Spotlight />
       <div aria-hidden className="edge-blur edge-blur-top hidden lg:block" />
       <div aria-hidden className="edge-blur edge-blur-bottom" />
 
@@ -27,8 +25,8 @@ export default async function Home() {
 
           <main className="pt-24 text-dim lg:w-[52%] lg:py-24">
             <IntroSection />
-            <ExperienceSection />
             <ProjectsSection />
+            <ExperienceSection />
             <OpenSourceSection />
             <WritingSection />
             <EducationSection />

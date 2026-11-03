@@ -1,16 +1,16 @@
 import Image from "next/image";
 import { Carousel } from "@/components/carousel";
 import { projects } from "@/content";
-import { Arrow, PortfolioSection, Tags } from "./shared";
+import { Arrow, PortfolioSection } from "./shared";
 
 export function ProjectsSection() {
   return (
-    <PortfolioSection id="projects" index={2}>
+    <PortfolioSection id="projects" index={1}>
       <Carousel label="프로젝트">
         {projects.map((project) => (
           <article
             key={project.title}
-            className="group relative flex flex-col overflow-hidden rounded-xl border border-line bg-card transition duration-300 ease-out hover:-translate-y-1 hover:border-faint/60 hover:shadow-xl hover:shadow-black/20 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+            className="group relative flex w-full flex-col overflow-hidden rounded-xl border border-line bg-card transition duration-300 ease-out hover:-translate-y-1 hover:border-faint/60 hover:shadow-xl hover:shadow-black/20 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
           >
             <div className="relative aspect-[16/9] overflow-hidden border-b border-line bg-surface">
               {project.image ? (
@@ -27,6 +27,15 @@ export function ProjectsSection() {
                     {project.title}
                   </span>
                 </div>
+              )}
+              {project.live && (
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-md bg-black/55 px-2 py-1 text-[11px] leading-none font-medium text-white backdrop-blur-sm">
+                  <span
+                    aria-hidden
+                    className="size-1.5 rounded-full bg-emerald-400"
+                  />
+                  운영 중
+                </span>
               )}
             </div>
             <div className="flex flex-1 flex-col p-5">
@@ -65,23 +74,6 @@ export function ProjectsSection() {
               <p className="mt-2 flex-1 text-[15px] leading-[1.75] whitespace-pre-line">
                 {project.description}
               </p>
-              {project.links && project.links.length > 0 && (
-                <ul className="relative z-20 mt-2 flex gap-4 text-[13px]">
-                  {project.links.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        className="font-medium text-fg/85 hover:text-fg"
-                      >
-                        {link.label} ↗
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              <Tags tags={project.tags} />
             </div>
           </article>
         ))}

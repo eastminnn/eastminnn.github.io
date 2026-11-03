@@ -2,8 +2,8 @@ import { awards, certifications, education, openSource, writing } from "@/conten
 
 export const sections = [
   { id: "about", label: "About", ko: "소개" },
-  { id: "experience", label: "Experience", ko: "경력" },
   { id: "projects", label: "Projects", ko: "프로젝트" },
+  { id: "experience", label: "Experience", ko: "경력" },
   ...(openSource.length > 0
     ? [{ id: "open-source", label: "Open Source", ko: "오픈소스 기여" }]
     : []),

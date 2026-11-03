@@ -2,10 +2,10 @@ import type { Contributions } from "@/lib/github";
 
 const levelClass = [
   "bg-surface",
-  "bg-fg/20 group-hover/graph:bg-contribution-1 group-focus-within/graph:bg-contribution-1",
-  "bg-fg/40 group-hover/graph:bg-contribution-2 group-focus-within/graph:bg-contribution-2",
-  "bg-fg/65 group-hover/graph:bg-contribution-3 group-focus-within/graph:bg-contribution-3",
-  "bg-fg/90 group-hover/graph:bg-contribution-4 group-focus-within/graph:bg-contribution-4",
+  "bg-fg/20 group-hover/graph:bg-contribution-1 group-focus-within/graph:bg-contribution-1 touch:bg-contribution-1",
+  "bg-fg/40 group-hover/graph:bg-contribution-2 group-focus-within/graph:bg-contribution-2 touch:bg-contribution-2",
+  "bg-fg/65 group-hover/graph:bg-contribution-3 group-focus-within/graph:bg-contribution-3 touch:bg-contribution-3",
+  "bg-fg/90 group-hover/graph:bg-contribution-4 group-focus-within/graph:bg-contribution-4 touch:bg-contribution-4",
 ] as const;
 
 const formatDate = (date: string) => date.replaceAll("-", ".");

@@ -6,12 +6,11 @@ import {
   listClass,
   Logo,
   PortfolioSection,
-  Tags,
 } from "./shared";
 
 export function ExperienceSection() {
   return (
-    <PortfolioSection id="experience" index={1}>
+    <PortfolioSection id="experience" index={2}>
       <ol className={listClass}>
         {experience.map((item) => (
           <li key={`${item.period}-${item.company}`} className={itemClass}>
@@ -69,7 +68,6 @@ export function ExperienceSection() {
                   ))}
                 </ul>
               )}
-              <Tags tags={item.tags} />
             </div>
           </li>
         ))}

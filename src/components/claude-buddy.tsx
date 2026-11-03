@@ -1,58 +1,45 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
-
-const sprite = [
-  "..#########..",
-  "..#########..",
-  "..##E###E##..",
-  "..##E###E##..",
-  "#############",
-  "..#########..",
-  "..#########..",
-  "...#.#.#.#...",
-  "...#.#.#.#...",
-];
-
-const bodyPath = sprite
-  .flatMap((row, y) =>
-    [...row].map((cell, x) =>
-      cell === "." ? "" : `M${x} ${y}h1v1h-1z`,
-    ),
-  )
-  .join("");
-
-function Sprite({ shaking }: { shaking: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 13 9"
-      width={78}
-      height={54}
-      shapeRendering="crispEdges"
-      aria-hidden
-      className={shaking ? "buddy-shake" : undefined}
-    >
-      <path d={bodyPath} fill="#d97757" />
-      <rect className="buddy-eye" x={4} y={2} width={1} height={2} fill="#1a1a1a" />
-      <rect className="buddy-eye" x={8} y={2} width={1} height={2} fill="#1a1a1a" />
-    </svg>
-  );
-}
+import { useCallback, useState, type MouseEvent, type ReactNode } from "react";
+import { canFollow, ClaudeFollower } from "./claude-follower";
+import { Sprite } from "./claude-sprite";
 
 export function ClaudeBuddy({ children }: { children: ReactNode }) {
   const [shakeCount, setShakeCount] = useState(0);
   const [clickCount, setClickCount] = useState(0);
   const [phase, setPhase] = useState<
-    "home" | "leaving" | "away" | "returning"
+    "home" | "leaving" | "away" | "returning" | "following"
   >("home");
   const [active, setActive] = useState(false);
+  const [followFrom, setFollowFrom] = useState({ x: 0, y: 0 });
 
-  const handleClick = () => {
+  const comeHome = useCallback(() => {
+    setPhase("home");
+    setClickCount(0);
+  }, []);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     if (phase === "leaving" || phase === "returning") return;
-
     const nextClickCount = clickCount + 1;
+    if (phase === "following") {
+      if (nextClickCount < 10) {
+        setClickCount(nextClickCount);
+        return;
+      }
+      comeHome();
+      setActive(true);
+      return;
+    }
+
     if (nextClickCount === 10) {
       setClickCount(0);
+      if (phase === "home" && canFollow()) {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setFollowFrom({ x: rect.left, y: rect.top - 80 });
+        setPhase("following");
+        setActive(false);
+        return;
+      }
       setPhase(phase === "home" ? "leaving" : "returning");
       setActive(true);
       return;
@@ -67,7 +54,7 @@ export function ClaudeBuddy({ children }: { children: ReactNode }) {
     home: "안녕하세요!",
     leaving: "잠깐 다녀올게요.",
     returning: "다시 돌아오는 중...",
-  }[phase === "away" ? "home" : phase];
+  }[phase === "away" || phase === "following" ? "home" : phase];
 
   const hideTooltip = () => {
     if (phase === "leaving" || phase === "returning") return;
@@ -79,6 +66,7 @@ export function ClaudeBuddy({ children }: { children: ReactNode }) {
     leaving: "buddy-crawl-out",
     away: "",
     returning: "buddy-crawl-in",
+    following: "",
   }[phase];
 
   return (
@@ -87,13 +75,20 @@ export function ClaudeBuddy({ children }: { children: ReactNode }) {
       onClick={handleClick}
       onMouseLeave={hideTooltip}
       onBlur={hideTooltip}
-      aria-label={`Claude 캐릭터. 10번 클릭하면 화면 ${phase === "away" ? "안으로 돌아옵니다" : "밖으로 나갑니다"}. 현재 ${clickCount}번 클릭했습니다.`}
+      aria-label={
+        phase === "following"
+          ? `Claude 캐릭터가 마우스를 따라다니고 있습니다. 10번 클릭하면 돌아옵니다. 현재 ${clickCount}번 클릭했습니다.`
+          : `Claude 캐릭터. 10번 클릭하면 화면 ${phase === "away" ? "안으로 돌아옵니다" : "밖으로 나갑니다"}. 현재 ${clickCount}번 클릭했습니다.`
+      }
       className="group/buddy relative inline-block cursor-pointer appearance-none rounded-sm border-0 bg-transparent p-0 [color:inherit] [font:inherit] outline-none focus-visible:ring-2 focus-visible:ring-fg/40 focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
     >
       <em className="underline decoration-[#d97757]/60 decoration-2 underline-offset-4 transition-colors group-hover/buddy:text-[#d97757] group-focus-visible/buddy:text-[#d97757]">
         {children}
       </em>
-      {phase !== "away" && (
+      {phase === "following" && (
+        <ClaudeFollower from={followFrom} />
+      )}
+      {phase !== "away" && phase !== "following" && (
         <span
           role="tooltip"
           onAnimationEnd={(event) => {

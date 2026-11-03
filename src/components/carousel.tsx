@@ -60,7 +60,7 @@ export function Carousel({
               role="group"
               aria-roledescription="slide"
               aria-label={`${i + 1} / ${slides.length}`}
-              className="w-full shrink-0 snap-center"
+              className="flex w-full shrink-0 snap-center"
             >
               {slide}
             </div>

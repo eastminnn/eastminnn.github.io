@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { sections } from "@/components/sections";
+import { techIcon } from "./tech-icons";
 
 const sectionLabels = new Map(
   sections.map(({ id, label }) => [id, label] as const),
@@ -41,19 +42,52 @@ export function PortfolioSection({
   );
 }
 
-export function Tags({ tags }: { tags: string[] }) {
+export function Tags({
+  tags,
+  className = "mt-3 gap-1.5",
+}: {
+  tags: string[];
+  className?: string;
+}) {
   if (tags.length === 0) return null;
 
   return (
-    <ul className="mt-3 flex flex-wrap gap-1.5" aria-label="사용 기술">
-      {tags.map((tag) => (
-        <li
-          key={tag}
-          className="rounded-full bg-fg/10 px-2.5 py-1 text-[12px] leading-none font-medium text-fg/85"
-        >
-          {tag}
-        </li>
-      ))}
+    <ul className={`flex flex-wrap ${className}`} aria-label="사용 기술">
+      {tags.map((tag) => {
+        const icon = techIcon(tag);
+        return (
+          <li
+            key={tag}
+            className="inline-flex items-center gap-1 rounded-full bg-fg/10 px-2.5 py-1 text-[12px] leading-none font-medium text-fg/85"
+          >
+            {icon && (
+              <svg
+                aria-hidden
+                viewBox="0 0 24 24"
+                className="size-3 shrink-0"
+                {...(icon.outline
+                  ? {
+                      fill: "none",
+                      stroke: icon.color ?? "currentColor",
+                      strokeWidth: icon.strokeWidth ?? 2.4,
+                      strokeLinecap: "round" as const,
+                      strokeLinejoin: "round" as const,
+                    }
+                  : { fill: icon.color ?? "currentColor" })}
+              >
+                {icon.layers ? (
+                  icon.layers.map((layer) => (
+                    <path key={layer.path} d={layer.path} fill={layer.color} />
+                  ))
+                ) : (
+                  <path d={icon.path} fillRule={icon.fillRule} />
+                )}
+              </svg>
+            )}
+            {tag}
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -67,7 +101,7 @@ export function Logo({ src }: { src?: string }) {
       alt=""
       width={20}
       height={20}
-      className="mr-2 size-5 shrink-0 rounded-[5px] opacity-60 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0"
+      className="mr-2 size-5 shrink-0 rounded-[5px] opacity-60 grayscale transition duration-300 group-hover:opacity-100 group-hover:grayscale-0 touch:opacity-100 touch:grayscale-0"
     />
   );
 }
@@ -79,6 +113,15 @@ export function Arrow() {
       className="ml-1 inline-block text-[0.85em] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
     >
       ↗
+    </span>
+  );
+}
+
+export function LiveBadge() {
+  return (
+    <span className="inline-flex shrink-0 items-center gap-1.5 text-[12px] leading-none text-faint">
+      <span aria-hidden className="size-1.5 rounded-full bg-emerald-500" />
+      운영 중
     </span>
   );
 }
